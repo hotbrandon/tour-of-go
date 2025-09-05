@@ -1,29 +1,29 @@
 package main
 
+// https://go.dev/tour/methods/11
+
 import (
 	"fmt"
 )
 
-// https://go.dev/tour/methods/1
+type Shape interface {
+    Area() float64
+}
 
-func main() {
-	m1 := make(map[string]string)
+type Square struct {
+    Side float64
+}
 
-	m1["name"] = "Alice"
-	m1["course"] = "golang"
-	m1["site"] = "example.com"
+func (s Square) Area() float64 {
+    return s.Side * s.Side
+}
 
-	fmt.Println(m1)
-
-	if v, ok := m1["name"]; ok {
-		fmt.Println("name:", v)
-	} else {
-		fmt.Println("no name")
-	}
-
-	if v, ok := m1["major"]; ok {
-		fmt.Println("major:", v)
-	} else {
-		fmt.Println("no major")
-	}
+func GetArea(s Shape) float64 {
+    return s.Area()
+}
+func main(){
+	// In main, you can assign a Square to a Shape interface
+	mySquare := Square{Side: 10}
+	fmt.Printf("type of mySquare: %T\n", mySquare) // type of mySquare: main.Square
+	fmt.Println(GetArea(mySquare)) // GetArea works with a Square
 }
